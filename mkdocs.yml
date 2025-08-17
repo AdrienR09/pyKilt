@@ -1,0 +1,54 @@
+site_name: Kilt
+site_description: Kinetic Inverse-Laplace Toolbox (KILT) for fluorescence lifetime analysis
+site_author: Adrien Rousseau
+repo_url: https://github.com/AdrienR09/kilt
+repo_name: kilt
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - toc.integrate
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+    - search.share
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  language: en
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append(".")
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - def_list
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.emoji
+  - pymdownx.tasklist
