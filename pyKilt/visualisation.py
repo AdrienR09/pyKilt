@@ -4,13 +4,13 @@ import seaborn as sns
 
 def plot_1d_fit(time, data, fit, title="Fit vs Data"):
     sns.set_style("whitegrid", {'axes.grid': False})
-    fig, ax = plt.subplots(2, 1, figsize=(6, 6), constrained_layout=True)
-    ax[0].semilogy(time, data, label="Data")
-    ax[0].semilogy(time, fit, 'k-', label="Fit")
-    ax[0].set_xlabel("Time (ns)")
-    ax[0].set_ylabel("Counts")
-    ax[0].legend()
-    ax[0].set_title(title)
+    fig, ax = plt.subplots(1, 1, figsize=(6, 4), constrained_layout=True)
+    ax.semilogy(time, data, label="Data")
+    ax.semilogy(time, fit, 'k-', label="Fit")
+    ax.set_xlabel("Time (ns)")
+    ax.set_ylabel("Counts")
+    ax.legend()
+    ax.set_title(title)
     return fig, ax
 
 def plot_1d_distribution(tau, A, title="Recovered Lifetime Distribution"):

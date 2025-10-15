@@ -22,6 +22,7 @@ class KiltConfig:
     # IRF options
     optimize_irf_shift: bool = True
     irf_shift_list: Optional[Iterable[int]] = None   # e.g. range(0, 5)
+    irf: Optional[Iterable[float]] = None   # e.g. range(0, 5)
     conv_pad: int = 0
     baseline: Optional[float] = None  # if None, use ExpData[0]
 
@@ -41,7 +42,10 @@ class KiltConfig:
     sigma2: float = 1.0  # stabilizer in chi2 denominator
 
     # JAX IRF mode for 2D (K_irf = K or toeplitz(IRF) @ K )
-    jax_use_irf_convolution: bool = False
+    use_irf_convolution: bool = False
+
+    # Let A varies with time (2D ILT)
+    time_varying_A: bool = True
 
 # ------------------------ Light JAX management --------------------
 
@@ -171,7 +175,7 @@ except Exception:
 
 if JAX_AVAILABLE:
     # Packing upper-triangular blocks for U
-    def jax_build_packers(tau_bins: int):
+    def jax_build_packers(tau_bins: int, delay_bins: int):
         tri_idx = jnp.triu_indices(tau_bins)
         tri_len = tri_idx[0].size
 
@@ -181,7 +185,7 @@ if JAX_AVAILABLE:
             return jnp.concatenate(parts)
 
         @jit
-        def unpack(theta, delay_bins):
+        def unpack(theta):
             A = theta[:tau_bins * tau_bins].reshape(tau_bins, tau_bins)
             Ulist = []
             offset = tau_bins * tau_bins

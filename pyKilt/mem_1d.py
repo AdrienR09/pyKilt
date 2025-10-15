@@ -21,7 +21,6 @@ def run_ilt_1d(
     time: np.ndarray,
     tau: np.ndarray,
     ExpData: np.ndarray,
-    irf: np.ndarray,
     cfg: KiltConfig,
     A_init: np.ndarray = None,
     m_prior: np.ndarray = None,
@@ -47,13 +46,16 @@ def run_ilt_1d(
 
     for shift in cfg.irf_shift_list:
         # Align IRF if requested
-        irf_shifted = irf
+        irf_shifted = cfg.irf
         if cfg.optimize_irf_shift:
             rise_fl = int(np.argmax(ExpData))
-            rise_irf = int(np.argmax(irf)) + int(shift)
-            irf_shifted = shift_irf(irf, rise_fl - rise_irf)
+            rise_irf = int(np.argmax(cfg.irf)) + int(shift)
+            irf_shifted = shift_irf(cfg.irf, rise_fl - rise_irf)
 
-        K_irf = make_irf_matrix_conv(K, irf_shifted, conv_pad=cfg.conv_pad)
+        if cfg.use_irf_convolution:
+            K_irf = make_irf_matrix_conv(K, irf_shifted, conv_pad=cfg.conv_pad)
+        else:
+            K_irf = K
 
         # Anneal/scan eta
         A_seed = A_init.copy()
