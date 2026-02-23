@@ -20,4 +20,15 @@ fast and flexible fluorescence lifetime analysis using the
 ---
 
 ## Get Started
-Check the [Installation](installation.md) guide and the [Quick Start](usage/quickstart.md) example.
+Welcome to Kilt — Kernel-based Inverse Laplace Transform (pyKilt).
+
+Contents
+- [Installation](installation.md)
+- [Quick Start](quickstart.md)
+- [1D MEM usage](1d.md)
+- [2D / global MEM usage](2d.md)
+- [Plotting & visualization](plotting.md)
+- [API reference (summary)](api.md)
+- [Examples](examples/)
+
+Refer to individual pages for detailed examples and configuration notes.
